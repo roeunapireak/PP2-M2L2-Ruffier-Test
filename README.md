@@ -23,7 +23,7 @@ Step 6 - Show the result.
 
 #### evaluation correlates with age
 
-<img src="images/eval_correl.png" width="700"/>
+<img src="images/eval_correl.png" width="900"/>
 
 
 
