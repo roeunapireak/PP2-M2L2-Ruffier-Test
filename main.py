@@ -14,6 +14,14 @@ age = 7
 name = ""
 p1, p2, p3 = 0, 0, 0
 
+def check_int(str_num):
+    # returns a number or False if the string is not converted
+    try:
+        return int(str_num)
+    except:
+        return False
+
+
 class InstrScr(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -49,7 +57,11 @@ class InstrScr(Screen):
         global name 
         name = self.in_name.text
 
-        self.manager.current = 'pulse1'
+        age = check_int(self.in_age.text)
+        if age == False or age < 7:
+            age = 7
+        else:
+            self.manager.current = 'pulse1'
 
 class PulseScr(Screen):
     def __init__(self, **kwargs):

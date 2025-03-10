@@ -1,42 +1,37 @@
-# Ruffier-Test
+# 1. Incorrectly entered data
 
-The Ruffier Test app will help users evaluate the condition of their cardiovascular system.  
+### 1.1. Pulse and age values are not integers.
+### 1.2. The user did not enter their response; the field is empty.
+### 1.3. The age is less than 7.
+### 1.4. Pulse is a negative number.
 
-It’s intended to observe the work of the heart when it’s under physical strain and evaluate the effectiveness of that work.
+How can we check whether the user has entered an integer or not?
+<img src="images/incorrected_data_enter.png" width="700"/>
 
-## MVP mobile app
-
-In this module, MVP mobile app is for evaluating the effectiveness of the cardiovascular system based on the Ruffier test. You will able to test this app on potential users.
-
-These very simple apps are also known as a minimum viable product (MVP).
-An MVP has only the necessary features that are enough to check the app’s functionality.
-
-
-### 1). how the test is carried out.
-
-Step 1 - Rest for a few minutes and take your pulse for 15 seconds.
-Step 2 - Do 30 squats in 45 seconds.
-Step 3 - Take your pulse for 15 seconds.
-Step 4 - Rest for 30 seconds.
-Step 5 - Take your pulse for 15 seconds.
-Step 6 - Show the result.
-
-#### evaluation correlates with age
-
-<img src="images/eval_correl.png" width="900"/>
+# 2. Exceptions handling
+<img src="images/check_int_func.png" width="700"/>
 
 
+# Students' Implementation
 
-### 2). Necessary data that the user must enter:
+### 1. class InstrScr()
 
-Name, Age, and The three results from taking their pulse.
+        ...
+        def check_int(str_num):
+            try:
+                return int(str_num)
+            except:
+                return False
 
+        class InstrScr(Screen):
+            ...
+            def press_next(self):
+                ...
+                age = check_int(self.in_age.text)
+                if age == False or age < 7:
+                    age = 7
+                else:
+                    self.manager.current = 'pulse1'
+        ...
 
-### 3). The heart’s efficiency is evaluated according to the formula
-
-- Ruffier index = ( 4 * (P1 + P2 + P3 + P4) - 200 ) / 10 
-
-P1, P2, and P3 are the results of the pulse readings.
-
-
-
+### 2. 
