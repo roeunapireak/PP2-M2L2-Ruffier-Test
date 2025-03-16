@@ -10,6 +10,14 @@ from instr import txt_instruction, txt_test1, txt_test2, txt_test3, txt_sits
 
 from ruffier import test
 
+from second import Second
+
+def check_int(str_num):
+    try:
+        return int(str_num)
+    except:
+        return False
+
 age = 7
 name = ""
 p1, p2, p3 = 0, 0, 0
@@ -49,7 +57,12 @@ class InstrScr(Screen):
         global name 
         name = self.in_name.text
 
-        self.manager.current = 'pulse1'
+        age = check_int(self.in_age.text)
+
+        if age == False or age < 7: 
+            age = 0
+        else:
+            self.manager.current = 'pulse1'
 
 class PulseScr(Screen):
     def __init__(self, **kwargs):
@@ -64,7 +77,6 @@ class PulseScr(Screen):
         line.add_widget(lbl_result)
         line.add_widget(self.in_result)
     
-
         layout = BoxLayout(orientation='vertical', padding=8, spacing=8)
         layout.add_widget(instruction)
         layout.add_widget(line)
@@ -73,13 +85,34 @@ class PulseScr(Screen):
         self.btn.on_press = self.press_next
         layout.add_widget(self.btn)
 
+        # additional properties
+        self.lbl_sec = Second(15)
+        self.lbl_sec.bind(done=self.sec_finsish)
+        self.next_screen = False
+        self.in_result.set_disabled(True)
+
+        layout.add_widget(self.lbl_sec)
+
         self.add_widget(layout)
 
-    def press_next(self):
-        global p1 
-        p1 = int(self.in_result.text)
+    def sec_finsish(self, *args):
+        self.next_screen = True
+        self.in_result.set_disabled(False)
+        self.btn.set_disabled(False)
+        self.btn.text = 'Continue'
 
-        self.manager.current = 'sits'
+
+    def press_next(self):
+        if not self.next_screen:
+            self.btn.set_disabled(True)
+            self.lbl_sec.start()
+        else:
+            global p1 
+            p1 = check_int(self.in_result.text)
+            if p1 == False or p1 <= 0:
+                p1 = 0
+            else:
+                self.manager.current = 'sits'
 
 
 class CheckSits(Screen):
@@ -127,7 +160,23 @@ class PulseScr2(Screen):
         layout.add_widget(line2)
         layout.add_widget(self.btn)
 
-        self.add_widget(layout)
+        # additionnal properties
+    #     self.next_sceen = False
+    #     self.stage = 0 
+    #     self.lbl_sec = Second(15)
+    #     self.lbl1 = Label(text='Count your pulse')
+
+    #     self.add_widget(layout)
+
+    # def sec_finish(self, *args):
+    #     if self.lbl_sec.done: 
+    #         if self.stage == 0:
+    #             self.stage = 1
+    #             self.lbl1.restart(30)
+    #             self.in_result1.set_disabled(False)
+    #         elif self.stage == 1:
+    #             self.stage = 2
+    #             self
 
     def press_next(self):
         global p2, p3
