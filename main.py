@@ -161,30 +161,48 @@ class PulseScr2(Screen):
         layout.add_widget(self.btn)
 
         # additionnal properties
-    #     self.next_sceen = False
-    #     self.stage = 0 
-    #     self.lbl_sec = Second(15)
-    #     self.lbl1 = Label(text='Count your pulse')
+        self.next_sceen = False
+        self.stage = 0 
+        self.lbl_sec = Second(15)
+        self.lbl1 = Label(text='Count your pulse')
 
-    #     self.add_widget(layout)
+        layout.add_widget(self.lbl1)
+        layout.add_widget(self.lbl_sec)
+        self.add_widget(layout)
 
-    # def sec_finish(self, *args):
-    #     if self.lbl_sec.done: 
-    #         if self.stage == 0:
-    #             self.stage = 1
-    #             self.lbl1.restart(30)
-    #             self.in_result1.set_disabled(False)
-    #         elif self.stage == 1:
-    #             self.stage = 2
-    #             self
+    def sec_finish(self, *args):
+        if self.lbl_sec.done: 
+            if self.stage == 0:
+                self.stage = 1
+                self.lbl1.restart(30)
+                self.in_result1.set_disabled(False)
+            elif self.stage == 1:
+                self.stage = 2
+                self.lbl1.text = "Count your pulse"
+                self.lbl_sec.restart(15)
+            elif self.stage == 2:
+                self.in_result2.set_disabled(False)
+                self.btn.set_disabled(False)
+                self.btn.text = 'Complete'
+                self.next_sceen = True    
 
     def press_next(self):
-        global p2, p3
-        p2 = int(self.in_result1.text)
-        p3 = int(self.in_result2.text)
-    
-        self.manager.current = 'result'
+        if not self.next_sceen:
+            self.btn.set_disabled(True)
+            self.lbl_sec.start()
+        else:
+            global p2, p3
+            p2 = int(self.in_result1.text)
+            p3 = int(self.in_result2.text)
 
+            if p2 == False:
+                p2 = 0
+                self.in_result1.text = str(p2)
+            elif p3 == False:
+                p3 = 0
+                self.in_result2.text = str(p3)
+            else:
+                self.manager.current = 'result'
 
 class Result(Screen):
     def __init__(self, **kwargs):
