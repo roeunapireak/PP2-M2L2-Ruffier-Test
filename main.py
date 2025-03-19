@@ -164,6 +164,7 @@ class PulseScr2(Screen):
         self.next_sceen = False
         self.stage = 0 
         self.lbl_sec = Second(15)
+        self.lbl_sec.bind(done=self.sec_finish)
         self.lbl1 = Label(text='Count your pulse')
 
         layout.add_widget(self.lbl1)
@@ -174,7 +175,8 @@ class PulseScr2(Screen):
         if self.lbl_sec.done: 
             if self.stage == 0:
                 self.stage = 1
-                self.lbl1.restart(30)
+                self.lbl1.text = 'Have a rest'
+                self.lbl_sec.restart(30)
                 self.in_result1.set_disabled(False)
             elif self.stage == 1:
                 self.stage = 2
@@ -192,8 +194,8 @@ class PulseScr2(Screen):
             self.lbl_sec.start()
         else:
             global p2, p3
-            p2 = int(self.in_result1.text)
-            p3 = int(self.in_result2.text)
+            p2 = check_int(self.in_result1.text)
+            p3 = check_int(self.in_result2.text)
 
             if p2 == False:
                 p2 = 0
@@ -203,6 +205,7 @@ class PulseScr2(Screen):
                 self.in_result2.text = str(p3)
             else:
                 self.manager.current = 'result'
+
 
 class Result(Screen):
     def __init__(self, **kwargs):

@@ -54,6 +54,7 @@ class PulseScr2(Screen):
         self.next_sceen = False
         self.stage = 0 
         self.lbl_sec = Second(15)
+        self.lbl_sec.bind(done=self.sec_finish)
         self.lbl1 = Label(text='Count your pulse')
 
         layout.add_widget(self.lbl1)
