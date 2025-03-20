@@ -12,6 +12,12 @@ from ruffier import test
 
 from second import Second
 
+## additional 
+from kivy.core.window import Window
+
+Window.clearcolor = (0.87, .54, .8, 1)
+
+
 def check_int(str_num):
     try:
         return int(str_num)
