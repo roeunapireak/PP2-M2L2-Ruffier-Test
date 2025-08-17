@@ -31,7 +31,8 @@ p1, p2, p3 = 0, 0, 0
 class InstrScr(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        instruction = Label(text=txt_instruction)
+        new_text = "[size=35]" + txt_instruction + " [/size]"
+        instruction = Label(text=new_text, markup=True)
 
         lbl1 = Label(text='Enter the name:', halign='right')
         lbl2 = Label(text='Enter the age:', halign='right')
@@ -242,6 +243,7 @@ class HeartCheck(App):
         sm.add_widget(CheckSits(name='sits'))
         sm.add_widget(PulseScr2(name='pulse2'))
         sm.add_widget(Result(name='result'))
+
 
         return sm
 
